@@ -157,12 +157,19 @@ async function timed(settings = {}) {
 
   // 인터벌이 주봉이라면 현재 시각이 08시 ~ 10시 사이여야 함.
   if (interval === 'weeks') {
+
     // 베이시스가 시가라면
     if (basis === 'opening_price') {
+      // 요일이 월요일인지 체크
+      if (curMt.isoWeekday() !== 1) { return false }
       if (curMt.hour() >= 9 && curMt.hour() <= 10) { return true }
     }
     // 베이시스가 종가라면
-    if (curMt.hour() >= 8 && curMt.hour() <= 9) { return true }
+    if (curMt.hour() >= 8 && curMt.hour() <= 9) {
+      // 요일이 일요일인지 체크
+      if (curMt.isoWeekday() !== 7) { return false }
+      return true
+    }
     return false
   }
 }

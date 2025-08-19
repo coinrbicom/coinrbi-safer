@@ -35,7 +35,7 @@ async function execute (scope = [], app = {}, settings = {}) {
   }
 
   // 💰매도 : settings.askConditions 기반
-  if (marketWallet && marketWallet.balance > 0 && time) {
+  if (marketWallet && marketWallet.balance > 0) {
     const bat = await chance(scope, 'ask', settings)
     if (bat) { await actions.order.askByCoinVolume(store, market, bat, candle[basis], candleAt) }
   }
