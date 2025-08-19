@@ -14,7 +14,7 @@ Copyright all Coinrbi Reversed, Since 2025
 
 ## 설명
 
-간단한 매수/매도봇 만들기 학습을 위한 자료, 매수매도봇을 구성하고 만들어 써보기 위해서 만든 간단 스크립트 예제
+간단한 매수/매도봇 만들기 학습을 위한 자료, 매수매도봇을 구성하고 만들어 써보기 위해서 만든 간단 스크립트 예제입니다.
 
 ## 환경
 
@@ -23,6 +23,10 @@ Copyright all Coinrbi Reversed, Since 2025
 - 윈도우 환경에서 작동하는 간단한 봇
 
 ## 설정법
+
+초기 세팅시 백테스팅 모드가 기본으로 켜져있습니다.
+
+1. 프로젝트 폴더에 .env에 실매매를 위한 API를 입력해주어야 합니다.
 
 `src` 폴더 안에 `config.js` 폴더에 설정만 기입
 
@@ -44,4 +48,5 @@ src : 소스폴더
 
 - 제작자 : 코인알비아이(코알)
 - 문의 : coinrbicom@gmail.com
-- 웹 : coinrbi.com
+- 웹 : https://coinrbi.com
+- 대화방 : https://open.kakao.com/o/gLZuhJzd
