@@ -20,7 +20,7 @@ Copyright all Coinrbi Reversed, Since 2025
 
 ## 환경
 
-- 버전 : 1.0.0
+- 버전 : 1.0.0 (베타)
 - 제작일 : 2025.08.13
 - 윈도우 환경에서 작동하는 간단한 봇
 
@@ -28,7 +28,13 @@ Copyright all Coinrbi Reversed, Since 2025
 
 초기 세팅시 백테스팅 모드가 기본으로 켜져있습니다.
 
-1. 프로젝트 폴더에 .env에 실매매를 위한 API를 입력해주어야 합니다.
+1. 프로젝트 폴더에 `.env`에 실매매를 위한 API를 입력해주어야 합니다. (백테스팅만 사용시, 기재 안하셔도 됩니다.)
+2. `src/strategy/default-v1/settings.js` 파일에서는 전략설정을 할 수 있습니다.
+3. `config.js` 파일에서는 백테스트 및 환경설정을 할 수 있습니다.
+4. 최상위에 있는 `start.cmd` 파일을 실행하시면 프로그램이 시작 됩니다.
+
+
+## 실 API키 연동시 주의사항
 
 `src` 폴더 안에 `config.js` 폴더에 설정만 기입
 
@@ -39,12 +45,10 @@ Copyright all Coinrbi Reversed, Since 2025
 
 ## 주요 구성된 내용
 
-src : 소스폴더
+`src` : 소스폴더
   strategies : 매수 또는 매도 전략 처리 구문을 담은 소스
   actions : 봇의 기능 작동을 위한 처리 구문을 담은 소스
-    ask.js : 매도기능
-    bid.js : 매수기능
-    transaction.js : 매수매도 기록
+  inspects : 봇의 구간적 유닛 점검을 위한 디버깅 소스
 
 ## 제작자 및 정보 공유
 
