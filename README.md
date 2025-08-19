@@ -33,6 +33,16 @@ Copyright all Coinrbi Reversed, Since 2025
 3. `config.js` 파일에서는 백테스트 및 환경설정을 할 수 있습니다.
 4. 최상위에 있는 `start.cmd` 파일을 실행하시면 프로그램이 시작 됩니다.
 
+## 실행 방법
+
+```bash
+git clone https://github.com/coinrbicom/coinrbi-safer.git
+cd coinrbi-safer
+npm install
+npm run dev
+```
+
+윈도우 환경에서는 `start.cmd` 실행시 `nodemon`이 작동하여 스크립트에 인수 또는 변경시 바로 실시간 반영됩니다.
 
 ## 실 API키 연동시 주의사항
 
