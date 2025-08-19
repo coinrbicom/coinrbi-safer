@@ -1,0 +1,8 @@
+/.bin
+/.caches
+/.logs
+/.logs-debugs
+/downloads/*
+node_modules
+
+.env
