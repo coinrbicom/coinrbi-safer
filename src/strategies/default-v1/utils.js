@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import moment from '../../services/moment/index.js'
 import { macdCosseBy, rsiPatternBy, wrPatternBy } from '../../actions/candle.js'
 
 async function delay(ms) { return new Promise((r) => setTimeout(r, ms)) }
@@ -94,6 +95,78 @@ function CandleSpool () {
   return this
 }
 
-export { delay, chance, CandleSpool }
+// live에서만 사용
+/*
+1) 감시가격 : 종가(trade_price) 또는 시가(openning_price)를 반드시 지정해주세요.
+2) 인터벌 : 1 ~ 주봉까지 지원하며, 인터벌 값에 따라서 매매를 진행하게 됩니다.
+
+시가 + 인터벌 15분이라면 매매시간은 58분 ~ 03분까지 진행됩니다.
+종가 + 인터벌 15분이라면 매매시간은 12분 ~ 16분 사이로 진행 됩니다.
+
+인터벌 :  '1', '3', '5', '10', '15', '30', '60', '240', 'days', 'weeks'
+베이시스 : 'trade_price', 'opening_price'
+*/
+async function timed(settings = {}) {
+  const basis = settings.basis || 'trade_price'
+  const interval = settings.interval || '1'
+  const curAt = new Date(), curMt = moment(curAt)
+
+  // 인터벌이 분봉이라면 제한없음
+  if (interval === '1' || interval === '3') { return true }
+
+  // 인터벌이 5분봉이라면 현재 분이 5분봉으로 떨어지는 시점의 -1, 0, 1분차여야 함.
+  if (['5', '10', '15', '30'].includes(interval)) {
+    const rest = curMt.minute() % interval
+    const allowMins = [0, 1,  4]
+    if (allowMins.includes(rest)) { return true }
+    return false
+  }
+
+  // 인터벌이 60분봉이라면 현재 시각이 58분 ~ 03분 사이여야 함.
+  if (interval === '60') {
+    if (curMt.minute() >= 58 || curMt.minute() <= 3) { return true }
+    return false
+  }
+
+  // 인터벌이 240분봉이라면 현재 시각이 58분 ~ 03분 사이이면서 4시간텀 간격이 반영되어야 함.
+  if (interval === '240') {
+    // 베이시스가 시가라면
+    if (basis === 'opening_price') {
+      if (curMt.minute() <= 3) {
+        if (curMt.hour() % 4 === 0) { return true }
+      }
+      return false
+    }
+    // 베이시스가 종가라면
+    if (curMt.minute() >= 57) {
+      if (curMt.hour() % 4 === 3) { return true }
+    }
+    return false
+  }
+
+  // 인터벌이 일봉이라면 현재 시각이 08시 ~ 10시 사이여야 함.
+  if (interval === 'days') {
+    // 베이시스가 시가라면
+    if (basis === 'opening_price') {
+      if (curMt.hour() >= 9 && curMt.hour() <= 10) { return true }
+    }
+    // 베이시스가 종가라면
+    if (curMt.hour() >= 8 && curMt.hour() <= 9) { return true }
+    return false
+  }
+
+  // 인터벌이 주봉이라면 현재 시각이 08시 ~ 10시 사이여야 함.
+  if (interval === 'weeks') {
+    // 베이시스가 시가라면
+    if (basis === 'opening_price') {
+      if (curMt.hour() >= 9 && curMt.hour() <= 10) { return true }
+    }
+    // 베이시스가 종가라면
+    if (curMt.hour() >= 8 && curMt.hour() <= 9) { return true }
+    return false
+  }
+}
+
+export { delay, chance, timed, CandleSpool }
 
 export default { delay, chance, CandleSpool }

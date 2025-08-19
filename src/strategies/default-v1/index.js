@@ -6,7 +6,7 @@ import _ from 'lodash'
 
 import settings from './settings.js'
 
-import { delay, chance, CandleSpool } from './utils.js'
+import { delay, chance, timed, CandleSpool } from './utils.js'
 
 //  😃매수/매도 실행 기능
 async function execute (scope = [], app = {}, settings = {}) {
@@ -18,24 +18,30 @@ async function execute (scope = [], app = {}, settings = {}) {
   const market = candle.market
 
   // log.msg(`[${moment(candle.timestamp).format('YYYY-MM-DD HH:mm:ss')}] ${market} : ${candle[basis].toLocaleString()} 원`, 'info')
-
   await store.update()
 
   // 👛원화지갑정보, 현재 마켓 지갑정보 가져오기
   const krwWallet = store.wallet.find(w => w.currency === 'KRW')
   const marketWallet = store.wallet.find(w => w.currency === market.split('-')[1])
 
+  // 매수/매도 시간에 대한 대응
+  const time = timed(settings)
+  if (time) { log.msg(`[${candleAt.format('YYYY-MM-DD HH:mm:ss')}] ${market} : 감시가 ${candle[basis].toLocaleString()} 원 매수/매도 체크중...`, 'info') }
+
   // 💰매수 : settings.bidConditions 기반
-  if (krwWallet && krwWallet.balance > 0) {
+  if (krwWallet && krwWallet.balance > 0 && time) {
     const bat = await chance(scope, 'bid',  settings)
     if (bat) { await actions.order.bidByKrw(store, market, bat, candle[basis], candleAt) }
   }
 
   // 💰매도 : settings.askConditions 기반
-  if (marketWallet && marketWallet.balance > 0) {
+  if (marketWallet && marketWallet.balance > 0 && time) {
     const bat = await chance(scope, 'ask', settings)
     if (bat) { await actions.order.askByCoinVolume(store, market, bat, candle[basis], candleAt) }
   }
+
+  // 매수/매도 텀 기능
+  if (settings.term) { await delay(settings.term * 60 * 1000) } // 설정된 시간만큼 대기
 }
 
 // 🔥매수/매도 전략

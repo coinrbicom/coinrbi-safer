@@ -1,7 +1,8 @@
 const settings = {}
 
 settings.commons = {
-  interval: '240', // 매매 주시간봉
+  interval: '240', // '1', '3', '5', '10', '15', '30', '60', '240', 'days', 'weeks'
+  term: 0.30, // 매매 간격(분 단위, 너무 짧지 않도록 구성하는것이 안전, 0이면 사용안함)
   candleCount: 200, // 분석할 캔들 총 갯수
   scopeCandleCount: 10, // 최종 캔들 판정 갯수
   basis: 'trade_price', // 판정기준 opening_price(시가), trade_price(종가)
