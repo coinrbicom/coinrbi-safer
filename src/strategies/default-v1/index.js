@@ -41,7 +41,7 @@ async function execute (scope = [], app = {}, settings = {}) {
   }
 
   // 매수/매도 텀 기능
-  if (settings.term) { await delay(settings.term * 60 * 1000) } // 설정된 시간만큼 대기
+  if (!config.backtest && settings.term) { await delay(settings.term * 60 * 1000) } // 설정된 시간만큼 대기
 }
 
 // 🔥매수/매도 전략
