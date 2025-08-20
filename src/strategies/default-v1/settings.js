@@ -11,6 +11,9 @@ settings.commons = {
   operator: 'MACD' // 👁️ 매수매도 조건에 사용할 인디케이터
 }
 
+// 😃 매수시간 설정에 대한 커스텀은 `utils.js` 파일에서 처리 되어 지정되어 있습니다.
+// 변경하시려면 해당 파일을 수정하세요.
+
 // 👁️ 인디케이터 기본 설정 : 매수매도 조건과 별개로 인디케이터 옵션은 두어야 합니다.
 const indicatorOptions = {
   MACD: { fastPeriod: 12, slowPeriod: 26, signalPeriod: 9 },

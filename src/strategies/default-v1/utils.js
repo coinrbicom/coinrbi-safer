@@ -176,4 +176,4 @@ async function timed(settings = {}) {
 
 export { delay, chance, timed, CandleSpool }
 
-export default { delay, chance, CandleSpool }
+export default { delay, chance, timed, CandleSpool }
