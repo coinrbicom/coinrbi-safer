@@ -107,3 +107,7 @@ npm run dev
 - 문의 : coinrbicom@gmail.com
 - 웹 : https://coinrbi.com
 - 대화방 : https://open.kakao.com/o/gLZuhJzd
+
+## 업데이트 안내
+
+- 2026년 03월 22일 : 코인알비아이 공식 홈페이지에서 백테스트를 온라인상 기동시 업비트에서 직접 바라보도록 구현방식을 변경하였습니다. 서버측 부담이 큰 관계로 직접 호출로 변경하였습니다.
